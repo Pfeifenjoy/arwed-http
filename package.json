@@ -1,0 +1,27 @@
+{
+  "name": "arwed-http",
+  "version": "0.0.1",
+  "description": "A generic module for http requests.",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf build",
+    "build": "babel src --out-dir build/",
+    "prepublish": "npm run build",
+    "prebuild": "npm run clean"
+  },
+  "author": "Arwed Mett",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.5.0"
+  },
+  "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.11.5",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "superagent": "^3.3.1"
+  }
+}
