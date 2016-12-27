@@ -1,3 +1,5 @@
 export Request from "./request"
 export PostRequest from "./post-request"
+export PutRequest from "./put-request"
+export GetRequest from "./get-request"
 export createMiddleware from "./middleware"

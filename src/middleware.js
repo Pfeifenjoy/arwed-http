@@ -16,24 +16,25 @@ export default (path, name, options) => store => {
         throw new TypeError("Name must be a string.")
     }
 
-    //get value out of the store.
     path = path.split(".")
-    let value = store.getState()
-
-    path.forEach(p => {
-        value = value[p]
-    })
-
-    //determine key
-    let key
-    if(typeof name === "string") {
-        key = name
-    } else {
-        key = path[ path.length - 1 ]
-    }
 
     return next => action => {
         if(action.payload instanceof Request) {
+
+            //get value out of the store.
+            let value = store.getState()
+
+            path.forEach(p => {
+                value = value[p]
+            })
+
+            //determine key
+            let key
+            if(typeof name === "string") {
+                key = name
+            } else {
+                key = path[ path.length - 1 ]
+            }
 
             //get url root / prefix
             let { rootUrl } = options
@@ -46,12 +47,12 @@ export default (path, name, options) => store => {
             }
             action.payload.destination = rootUrl + action.payload.destination
 
-            //construct payload
-            const payload = {}
-            payload[key] = value
-
             //fire request
-            action.payload = action.payload.addPayload(payload).send()
+            const req = action.payload
+            action.payload = action.payload.addPayload(key, value).send()
+                .then(res => {
+                    return { res, req }
+                })
         }
 
         return next(action)
